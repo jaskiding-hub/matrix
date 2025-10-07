@@ -1,0 +1,285 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.kontainer-utama {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.judul-utama {
+  text-align: center;
+  color: #667eea;
+  margin-bottom: 30px;
+  font-size: 2.5rem;
+}
+
+.bagian-ordo {
+  margin-bottom: 30px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 10px;
+}
+
+.bagian-ordo h2 {
+  color: #333;
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+}
+
+.grup-input-ordo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.grup-input-ordo label {
+  font-weight: 600;
+  color: #555;
+}
+
+.grup-input-ordo input[type="number"] {
+  width: 80px;
+  padding: 8px;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.tombolBuatMatriks {
+  padding: 10px 20px;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s;
+}
+
+.tombolBuatMatriks:hover {
+  background: #5568d3;
+}
+
+.area-matriks {
+  display: inline-block;
+  padding: 15px;
+  background: white;
+  border-radius: 8px;
+  border: 2px solid #667eea;
+}
+
+.baris-matriks {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 5px;
+}
+
+.baris-matriks:last-child {
+  margin-bottom: 0;
+}
+
+.input-elemen-matriks {
+  width: 60px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+.bagian-tombol-operasi {
+  margin-bottom: 30px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 10px;
+}
+
+.bagian-tombol-operasi h2 {
+  color: #333;
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+}
+
+.grup-tombol {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.grup-tombol button {
+  padding: 12px 24px;
+  background: #764ba2;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s;
+  font-size: 1rem;
+}
+
+.grup-tombol button:hover {
+  background: #5f3a82;
+}
+
+.bagian-hasil {
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 10px;
+}
+
+.bagian-hasil h2 {
+  color: #333;
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+}
+
+.area-hasil {
+  min-height: 100px;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  border: 2px solid #ddd;
+  font-size: 1.1rem;
+}
+
+.pesan-error {
+  color: #dc3545;
+  font-weight: 700;
+  font-size: 1.3rem;
+  text-align: center;
+  padding: 20px;
+}
+
+.hasil-matriks {
+  display: inline-block;
+  padding: 15px;
+  background: #e8f5e9;
+  border-radius: 8px;
+  border: 2px solid #4caf50;
+}
+
+.baris-hasil {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 5px;
+}
+
+.baris-hasil:last-child {
+  margin-bottom: 0;
+}
+
+.elemen-hasil {
+  min-width: 80px;
+  padding: 10px;
+  background: white;
+  border: 1px solid #4caf50;
+  border-radius: 4px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.hasil-determinan {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #4caf50;
+  text-align: center;
+  padding: 20px;
+}
+
+.langkah-invers {
+  padding: 20px;
+}
+
+.langkah-invers h3 {
+  color: #667eea;
+  margin-bottom: 20px;
+  font-size: 1.4rem;
+  border-bottom: 2px solid #667eea;
+  padding-bottom: 10px;
+}
+
+.langkah-invers p {
+  margin-bottom: 15px;
+  line-height: 1.6;
+  color: #333;
+}
+
+.langkah-invers strong {
+  color: #764ba2;
+  font-size: 1.1rem;
+}
+
+.langkah-invers .hasil-matriks {
+  margin: 15px 0;
+}
+
+.langkah-invers .pesan-error {
+  margin-top: 15px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .kontainer-utama {
+    padding: 15px;
+  }
+
+  .judul-utama {
+    font-size: 1.8rem;
+  }
+
+  .grup-input-ordo {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .grup-tombol {
+    flex-direction: column;
+  }
+
+  .grup-tombol button {
+    width: 100%;
+  }
+
+  .input-elemen-matriks {
+    width: 50px;
+    padding: 6px;
+    font-size: 0.85rem;
+  }
+
+  .elemen-hasil {
+    min-width: 60px;
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .input-elemen-matriks {
+    width: 40px;
+    padding: 4px;
+    font-size: 0.8rem;
+  }
+
+  .elemen-hasil {
+    min-width: 50px;
+    padding: 6px;
+    font-size: 0.85rem;
+  }
+}

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Matriks</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="kontainer-utama">
+        <h1 class="judul-utama">Kalkulator Matriks</h1>
+        
+         Bagian Input Ordo Matriks A 
+        <div class="bagian-ordo">
+            <h2>Matriks A</h2>
+             Swapped order: Kolom first, then Baris 
+            <div class="grup-input-ordo">
+                <label for="inputOrdoACol">Kolom:</label>
+                <input type="number" id="inputOrdoACol" min="1" max="10" value="2">
+                <label for="inputOrdoARow">Baris:</label>
+                <input type="number" id="inputOrdoARow" min="1" max="10" value="2">
+                <button class="tombolBuatMatriks" onclick="buatMatriksA()">Buat Matriks A</button>
+            </div>
+            <div id="areaMatriksA" class="area-matriks"></div>
+        </div>
+
+         Bagian Input Ordo Matriks B 
+        <div class="bagian-ordo">
+            <h2>Matriks B</h2>
+             Swapped order: Kolom first, then Baris 
+            <div class="grup-input-ordo">
+                <label for="inputOrdoBCol">Kolom:</label>
+                <input type="number" id="inputOrdoBCol" min="1" max="10" value="2">
+                <label for="inputOrdoBRow">Baris:</label>
+                <input type="number" id="inputOrdoBRow" min="1" max="10" value="2">
+                <button class="tombolBuatMatriks" onclick="buatMatriksB()">Buat Matriks B</button>
+            </div>
+            <div id="areaMatriksB" class="area-matriks"></div>
+        </div>
+
+         Bagian Tombol Operasi 
+        <div class="bagian-tombol-operasi">
+            <h2>Operasi</h2>
+            <div class="grup-tombol">
+                <button class="tombolHitungPerkalian" onclick="hitungPerkalian()">Perkalian A × B</button>
+                <button class="tombolHitungDeterminanA" onclick="hitungDeterminanA()">Determinan A</button>
+                <button class="tombolHitungInversA" onclick="hitungInversA()">Invers A</button>
+                <button class="tombolHitungDeterminanB" onclick="hitungDeterminanB()">Determinan B</button>
+                <button class="tombolHitungInversB" onclick="hitungInversB()">Invers B</button>
+            </div>
+        </div>
+
+         Bagian Hasil 
+        <div class="bagian-hasil">
+            <h2>Hasil</h2>
+            <div id="areaHasil" class="area-hasil"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
