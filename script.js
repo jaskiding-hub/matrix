@@ -240,7 +240,17 @@ function hitungDeterminan(matriks) {
     return matriks[0][0] * matriks[1][1] - matriks[0][1] * matriks[1][0]
   }
 
-  // Ekspansi kofaktor untuk matriks yang lebih besar
+  // Khusus untuk matriks 3x3, menggunakan Sarrus
+  if (n === 3) {
+    const a = matriks[0][0], b = matriks[0][1], c = matriks[0][2]
+    const d = matriks[1][0], e = matriks[1][1], f = matriks[1][2]
+    const g = matriks[2][0], h = matriks[2][1], i = matriks[2][2]
+    
+    // det(A) = (aei + bfg + cdh) - (ceg + afh + bdi)
+    return (a * e * i + b * f * g + c * d * h) - (c * e * g + a * f * h + b * d * i)
+  }
+
+  // Ekspansi kofaktor untuk matriks yang lebih besar (n > 3)
   let det = 0
   for (let j = 0; j < n; j++) {
     det += Math.pow(-1, j) * matriks[0][j] * hitungDeterminan(getMinor(matriks, 0, j))
@@ -264,7 +274,7 @@ function getMinor(matriks, barisHapus, kolomHapus) {
   return minor
 }
 
-// Fungsi hitung determinan untuk Matriks A (menampilkan langkah/rumus)
+// --- Fungsi untuk menampilkan langkah determinan (Matriks A) yang diperbarui ---
 function hitungDeterminanA() {
   const baris = Number.parseInt(document.getElementById("inputOrdoARow").value)
   const kolom = Number.parseInt(document.getElementById("inputOrdoACol").value)
@@ -284,7 +294,7 @@ function hitungDeterminanA() {
   const areaHasil = document.getElementById("areaHasil")
   let html = '<div class="langkah-invers">'
 
-  html += "<h3>Langkah-langkah Perhitungan Determinan:</h3>"
+  html += "<h3>Langkah-langkah Perhitungan Determinan Matriks A:</h3>"
 
   html += "<p><strong>1. Matriks A:</strong></p>"
   html += tampilkanMatriksPecahan(matriks)
@@ -303,23 +313,34 @@ function hitungDeterminanA() {
     html += `<p>det(A) = ${formatPecahan(a * d)} - ${formatPecahan(b * c)}</p>`
 
     const det = hitungDeterminan(matriks)
-    html += `<p><strong>4. Hasil:</strong> det(A) = ${formatPecahan(det)}</p>`
-  } else if (baris === 3) {
-    html += "<p><strong>2. Rumus determinan 3×3 (ekspansi baris pertama):</strong></p>"
-    html += "<p>det(A) = a₁₁C₁₁ + a₁₂C₁₂ + a₁₃C₁₃, dengan Cᵢⱼ = (-1)^{i+j} det(Mᵢⱼ)</p>"
-
-    html += "<p><strong>3. Perhitungan kofaktor:</strong></p>"
-    for (let j = 0; j < 3; j++) {
-      const minor = getMinor(matriks, 0, j)
-      const detMinor = hitungDeterminan(minor)
-      const kofaktor = Math.pow(-1, j) * detMinor
-      html += `<p>C₁${j + 1} = ${j % 2 === 0 ? "+" : "-"}det(M₁${j + 1}) = ${formatPecahan(kofaktor)}</p>`
-      html += `<p>det(M₁${j + 1}) = ${formatPecahan(detMinor)}</p>`
-    }
-
-    const det = hitungDeterminan(matriks)
     html += `<p><strong>4. Hasil akhir:</strong> det(A) = ${formatPecahan(det)}</p>`
+
+  } else if (baris === 3) {
+    // Implementasi Aturan Sarrus
+    const a = matriks[0][0], b = matriks[0][1], c = matriks[0][2]
+    const d = matriks[1][0], e = matriks[1][1], f = matriks[1][2]
+    const g = matriks[2][0], h = matriks[2][1], i = matriks[2][2]
+    
+    // det(A) = (aei + bfg + cdh) - (ceg + afh + bdi)
+    const bagian1 = a * e * i + b * f * g + c * d * h
+    const bagian2 = c * e * g + a * f * h + b * d * i
+    const det = bagian1 - bagian2
+
+    html += "<p><strong>2. Rumus determinan 3×3 (Aturan Sarrus):</strong></p>"
+    html += "<p>det(A) = (aei + bfg + cdh) - (ceg + afh + bdi)</p>"
+
+    html += "<p><strong>3. Hitung bagian pertama (Positif):</strong></p>"
+    html += `<p>(aei + bfg + cdh) = (${formatPecahan(a)}×${formatPecahan(e)}×${formatPecahan(i)}) + (${formatPecahan(b)}×${formatPecahan(f)}×${formatPecahan(g)}) + (${formatPecahan(c)}×${formatPecahan(d)}×${formatPecahan(h)})</p>`
+    html += `<p> = ${formatPecahan(a*e*i)} + ${formatPecahan(b*f*g)} + ${formatPecahan(c*d*h)} = <strong>${formatPecahan(bagian1)}</strong></p>`
+
+    html += "<p><strong>4. Hitung bagian kedua (Negatif):</strong></p>"
+    html += `<p>(ceg + afh + bdi) = (${formatPecahan(c)}×${formatPecahan(e)}×${formatPecahan(g)}) + (${formatPecahan(a)}×${formatPecahan(f)}×${formatPecahan(h)}) + (${formatPecahan(b)}×${formatPecahan(d)}×${formatPecahan(i)})</p>`
+    html += `<p> = ${formatPecahan(c*e*g)} + ${formatPecahan(a*f*h)} + ${formatPecahan(b*d*i)} = <strong>${formatPecahan(bagian2)}</strong></p>`
+
+    html += "<p><strong>5. Hasil akhir:</strong></p>"
+    html += `<p>det(A) = ${formatPecahan(bagian1)} - ${formatPecahan(bagian2)} = <strong>${formatPecahan(det)}</strong></p>`
   } else {
+    // Untuk n > 3, kembali ke ekspansi kofaktor
     html += "<p><strong>2. Metode:</strong></p>"
     html += "<p>Menggunakan ekspansi kofaktor baris pertama (umum untuk n×n)</p>"
 
@@ -331,7 +352,7 @@ function hitungDeterminanA() {
   areaHasil.innerHTML = html
 }
 
-// Fungsi hitung determinan untuk Matriks B (menampilkan langkah/rumus)
+// --- Fungsi untuk menampilkan langkah determinan (Matriks B) yang diperbarui ---
 function hitungDeterminanB() {
   const baris = Number.parseInt(document.getElementById("inputOrdoBRow").value)
   const kolom = Number.parseInt(document.getElementById("inputOrdoBCol").value)
@@ -351,7 +372,7 @@ function hitungDeterminanB() {
   const areaHasil = document.getElementById("areaHasil")
   let html = '<div class="langkah-invers">'
 
-  html += "<h3>Langkah-langkah Perhitungan Determinan:</h3>"
+  html += "<h3>Langkah-langkah Perhitungan Determinan Matriks B:</h3>"
 
   html += "<p><strong>1. Matriks B:</strong></p>"
   html += tampilkanMatriksPecahan(matriks)
@@ -370,23 +391,33 @@ function hitungDeterminanB() {
     html += `<p>det(B) = ${formatPecahan(a * d)} - ${formatPecahan(b * c)}</p>`
 
     const det = hitungDeterminan(matriks)
-    html += `<p><strong>4. Hasil:</strong> det(B) = ${formatPecahan(det)}</p>`
-  } else if (baris === 3) {
-    html += "<p><strong>2. Rumus determinan 3×3 (ekspansi baris pertama):</strong></p>"
-    html += "<p>det(B) = b₁₁C₁₁ + b₁₂C₁₂ + b₁₃C₁₃, dengan Cᵢⱼ = (-1)^{i+j} det(Mᵢⱼ)</p>"
-
-    html += "<p><strong>3. Perhitungan kofaktor:</strong></p>"
-    for (let j = 0; j < 3; j++) {
-      const minor = getMinor(matriks, 0, j)
-      const detMinor = hitungDeterminan(minor)
-      const kofaktor = Math.pow(-1, j) * detMinor
-      html += `<p>C₁${j + 1} = ${j % 2 === 0 ? "+" : "-"}det(M₁${j + 1}) = ${formatPecahan(kofaktor)}</p>`
-      html += `<p>det(M₁${j + 1}) = ${formatPecahan(detMinor)}</p>`
-    }
-
-    const det = hitungDeterminan(matriks)
     html += `<p><strong>4. Hasil akhir:</strong> det(B) = ${formatPecahan(det)}</p>`
+  } else if (baris === 3) {
+    // Implementasi Aturan Sarrus
+    const a = matriks[0][0], b = matriks[0][1], c = matriks[0][2]
+    const d = matriks[1][0], e = matriks[1][1], f = matriks[1][2]
+    const g = matriks[2][0], h = matriks[2][1], i = matriks[2][2]
+    
+    // det(B) = (aei + bfg + cdh) - (ceg + afh + bdi)
+    const bagian1 = a * e * i + b * f * g + c * d * h
+    const bagian2 = c * e * g + a * f * h + b * d * i
+    const det = bagian1 - bagian2
+
+    html += "<p><strong>2. Rumus determinan 3×3 (Aturan Sarrus):</strong></p>"
+    html += "<p>det(B) = (aei + bfg + cdh) - (ceg + afh + bdi)</p>"
+
+    html += "<p><strong>3. Hitung bagian pertama (Positif):</strong></p>"
+    html += `<p>(aei + bfg + cdh) = (${formatPecahan(a)}×${formatPecahan(e)}×${formatPecahan(i)}) + (${formatPecahan(b)}×${formatPecahan(f)}×${formatPecahan(g)}) + (${formatPecahan(c)}×${formatPecahan(d)}×${formatPecahan(h)})</p>`
+    html += `<p> = ${formatPecahan(a*e*i)} + ${formatPecahan(b*f*g)} + ${formatPecahan(c*d*h)} = <strong>${formatPecahan(bagian1)}</strong></p>`
+
+    html += "<p><strong>4. Hitung bagian kedua (Negatif):</strong></p>"
+    html += `<p>(ceg + afh + bdi) = (${formatPecahan(c)}×${formatPecahan(e)}×${formatPecahan(g)}) + (${formatPecahan(a)}×${formatPecahan(f)}×${formatPecahan(h)}) + (${formatPecahan(b)}×${formatPecahan(d)}×${formatPecahan(i)})</p>`
+    html += `<p> = ${formatPecahan(c*e*g)} + ${formatPecahan(a*f*h)} + ${formatPecahan(b*d*i)} = <strong>${formatPecahan(bagian2)}</strong></p>`
+
+    html += "<p><strong>5. Hasil akhir:</strong></p>"
+    html += `<p>det(B) = ${formatPecahan(bagian1)} - ${formatPecahan(bagian2)} = <strong>${formatPecahan(det)}</strong></p>`
   } else {
+    // Untuk n > 3, kembali ke ekspansi kofaktor
     html += "<p><strong>2. Metode:</strong></p>"
     html += "<p>Menggunakan ekspansi kofaktor baris pertama (umum untuk n×n)</p>"
 
